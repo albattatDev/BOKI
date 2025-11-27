@@ -13,11 +13,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.boki.data.local.ExpenseRepository;
 import com.example.boki.models.Expense;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 /**
  * Main Activity
  */
