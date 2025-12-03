@@ -1,9 +1,51 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.BOKI" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary brand color -->
+         <item name="colorPrimary">@color/BOKI_MainPurple</item>
+         <item name="colorPrimaryVariant">@color/BOKI_MainPurple</item>
     </style>
 
     <style name="Theme.BOKI" parent="Base.Theme.BOKI" />
+
+
+    <!-- Circla shape for FAB -->
+    <style name="ShapeAppearance.App.Circle" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- font for BottomNav -->
+    <style name="BottomNavTextStyle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="android:textSize">12sp</item> <!-- Optional: Adjust text size if needed -->
+    </style>
+
+
+
+    <!-- Add this style for the active indicator -->
+    <style name="App.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/BOKI_MainPurple</item>
+    </style>
+
+    <!--  Style for the Datepicker Dialogs  -->
+    <style name="DialogTheme" parent="Theme.Material3.DayNight.Dialog">
+        <!-- ===== HEADER and SELECTION COLOR ===== -->
+        <item name="colorAccent">@color/BOKI_MainPurple</item>
+        <!-- ===== BACKGROUND COLOR ===== -->
+        <item name="android:windowBackground">@color/BOKI_MidPurple</item>
+        <!-- ===== TEXT COLOR ===== -->
+        <!-- This is the main fix. It controls the color of the calendar day numbers and the header date -->
+        <item name="colorOnSurface">@color/BOKI_TextPrimary</item>
+        <item name="colorOnSurfaceVariant">@color/BOKI_TextPrimary</item>
+
+        <!-- This controls the color of the "OK" and "CANCEL" buttons -->
+        <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
+
+
+    </style>
+
+
+
+
 </resources>

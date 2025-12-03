@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!--colors-->
+        <color name="black">#FF000000</color>
+        <color name="BOKI_MainPurple">#8944FF</color>
+        <color name="BOKI_MidPurple">#160F21</color>
+        <color name="BOKI_DarkPurple">#0E0916</color>
+        <color name="BOKI_LightRead">#FF5569</color>
+
+
+    <!--Text color-->
+        <color name="BOKI_TextPrimary">#FFFFFF</color>
+        <color name="BOKI_TextSecondary">#B9B1C6</color>
+        <color name="BOKI_Divider">#433E4C</color>
+        <color name="BOKI_IconColor">#F2F4FF</color>
+
+
+
+    <!--  color with ~25% opacity -->
+    <color name="BOKI_MainPurple_Transparent">#40692DDC</color>
+    <color name="BOKI_TextPrimary_Transparent">#40FFFFFF</color>
+    <color name="BOKI_TextPrimary_More_Transparent">#10FFFFFF</color>
+    <color name="BOKI_MidPurple_Transparent">#40160F21</color>
+
 </resources>
