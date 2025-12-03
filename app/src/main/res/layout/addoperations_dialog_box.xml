@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="16dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/BOKI_DarkPurple"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/cancel_dialog_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="هوّنت"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/BOKI_MainPurple"
+                android:textStyle="bold"
+                android:layout_marginRight="200dp"
+                android:textSize="16dp"
+                android:padding="0dp"
+                android:textAlignment="textEnd"
+                android:fontFamily="@font/cairo"
+                android:backgroundTint="@android:color/transparent"
+                />
+
+            <Button
+                android:id="@+id/category_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="أخرى"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_MainPurple"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_MainPurple_Transparent"
+                />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginVertical="16dp">
+
+            <EditText
+                android:id="@+id/operation_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/cairo"
+                android:hint="اسم العملية"
+                android:padding="8dp"
+                android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextPrimary_Transparent"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:inputType="textFilter"
+                android:textAlignment="viewEnd"/>
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="8dp"
+                android:src="@drawable/storefront"
+                app:tint="@color/BOKI_MainPurple"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_view_transparent"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/riyal_symbol" />
+
+            <EditText
+                android:id="@+id/operation_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/cairo"
+                android:padding="8dp"
+                android:hint="0.00"
+                android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextPrimary"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                android:inputType="number"/>
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/arrow_downward"
+                app:tint="@color/BOKI_LightRead"
+                android:background="@drawable/rounded_square_transparent"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_marginVertical="16dp">
+
+            <Button
+                android:id="@+id/time_picker_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="(am)HH:MM"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:textColor="@color/BOKI_MainPurple"
+                android:padding="4dp"
+                app:cornerRadius="8dp"
+                android:backgroundTint="@color/BOKI_TextPrimary_More_Transparent"
+                />
+
+            <Button
+                android:id="@+id/date_picker_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="DD-MM-YYYY"
+                android:layout_marginHorizontal="8dp"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textColor="@color/BOKI_MainPurple"
+                android:textSize="12dp"
+                android:padding="4dp"
+                app:cornerRadius="8dp"
+                android:backgroundTint="@color/BOKI_TextPrimary_More_Transparent"
+                />
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="4dp"
+                android:src="@drawable/calendar_today"
+                app:tint="@color/BOKI_MainPurple"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/save_opration_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="حفظ"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:padding="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_MainPurple"
+                />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/operations"
+        android:title="العمليات"
+        android:icon="@drawable/invoice" />
+
+    <item
+        android:id="@+id/expenses"
+        android:title="المصاريف"
+        android:icon="@drawable/chart" />
+
+    <item
+        android:id="@+id/add"
+        android:title=""
+       />
+
+    <item
+        android:id="@+id/budget"
+        android:title="المزانية"
+        android:icon="@drawable/uil_abacus" />
+
+    <item
+        android:id="@+id/home"
+        android:title="الرئيسية"
+        android:icon="@drawable/home" />
+
+</menu>
