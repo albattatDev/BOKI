@@ -8,7 +8,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.boki.data.local.ExpenseRepository;
+import com.example.boki.models.Expense;
+
+/**
+ * Main Activity
+ */
 public class MainActivity extends AppCompatActivity {
+    
+    private static final String TAG = "MainActivity";
+    private ExpenseRepository expenseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +29,17 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        
+        // Initialize database repository
+        expenseRepository = new ExpenseRepository(this);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Close database resources
+        if (expenseRepository != null) {
+            expenseRepository.close();
+        }
     }
 }
