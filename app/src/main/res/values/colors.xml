@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--colors-->
-        <color name="black">#FF000000</color>
-        <color name="BOKI_MainPurple">#8944FF</color>
-        <color name="BOKI_MidPurple">#160F21</color>
-        <color name="BOKI_DarkPurple">#0E0916</color>
-        <color name="BOKI_LightRead">#FF5569</color>
+    <color name="black">#FF000000</color>
+    <color name="BOKI_MainPurple">#8944FF</color>
+    <color name="BOKI_MidPurple">#160F21</color>
+    <color name="BOKI_DarkPurple">#0E0916</color>
+    <color name="BOKI_lightBlue">#3DBCFF</color>
+    <color name="BOKI_lightPurple">#4F589B</color>
+    <color name="BOKI_LightRead">#FF5569</color>
+    <color name="BOKI_Blue">#5975FE</color>
+    <color name="BOKI_Pink">#FF55B1</color>
+    <color name="BOKI_Green">#41D300</color>
+    <color name="BOKI_Orange">#FBA000</color>
+
 
 
     <!--Text color-->
-        <color name="BOKI_TextPrimary">#FFFFFF</color>
-        <color name="BOKI_TextSecondary">#B9B1C6</color>
-        <color name="BOKI_Divider">#433E4C</color>
-        <color name="BOKI_IconColor">#F2F4FF</color>
+    <color name="BOKI_TextPrimary">#FFFFFF</color>
+    <color name="BOKI_TextSecondary">#B9B1C6</color>
+    <color name="BOKI_Divider">#433E4C</color>
+    <color name="BOKI_IconColor">#F2F4FF</color>
 
 
 
     <!--  color with ~25% opacity -->
-    <color name="BOKI_MainPurple_Transparent">#40692DDC</color>
+    <color name="BOKI_MainPurple_Transparent">#20692DDC</color>
     <color name="BOKI_TextPrimary_Transparent">#40FFFFFF</color>
     <color name="BOKI_TextPrimary_More_Transparent">#10FFFFFF</color>
     <color name="BOKI_MidPurple_Transparent">#40160F21</color>
+    <color name="BOKI_lightBlue_Transparent">#203DBCFF</color>
+    <color name="BOKI_lightPurple_Transparent">#204F589B</color>
+    <color name="BOKI_LightRead_Transparent">#20FF5569</color>
+    <color name="BOKI_Blue_Transparent">#205975FE</color>
+    <color name="BOKI_Pink_Transparent">#20FF55B1</color>
+    <color name="BOKI_Green_transparent">#2041D300</color>
+    <color name="BOKI_Orange_Transparent">#20FBA000</color>
+
+
 
 </resources>
