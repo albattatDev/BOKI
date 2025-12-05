@@ -1,6 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--CARD ELEMENT CONTINER-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/BOKI_DarkPurple"
+        android:orientation="vertical">
+
+        <!-- TOP BAR SECTION-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/cancel_dialog_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="هوّنت"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/BOKI_MainPurple"
+                    android:textStyle="bold"
+                    android:layout_marginRight="200dp"
+                    android:textSize="16dp"
+                    android:padding="0dp"
+                    android:textAlignment="textEnd"
+                    android:fontFamily="@font/cairo"
+                    android:backgroundTint="@android:color/transparent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="اختر التصنيف"
+                    android:fontFamily="@font/cairo"
+                    android:textColor="@color/BOKI_TextSecondary"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- FIRST ROW OF BUTTONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="16dp">
+
+            <Button
+                android:id="@+id/Helth_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="صحة وعناية"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/BOKI_LightRead"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_LightRead"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_LightRead_Transparent"
+                />
+            <Button
+                android:id="@+id/transportation_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="مواصلات"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/BOKI_lightPurple"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_lightPurple"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_lightPurple_Transparent"
+                />
+            <Button
+                android:id="@+id/communication_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/BOKI_lightBlue"
+                android:text="اتصالات"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_lightBlue"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_lightBlue_Transparent"
+                />
+
+        </LinearLayout>
+
+        <!--  SECOUND ROW OF BUTTONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/education_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="تعليم"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                android:textColor="@color/BOKI_Green"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_Green"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_Green_transparent"
+                />
+            <Button
+                android:id="@+id/food_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="مطاعم"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textColor="@color/BOKI_Pink"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_Pink"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_Pink_Transparent"
+                />
+            <Button
+                android:id="@+id/family_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="العائلة"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textColor="@color/BOKI_Blue"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_Blue"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_Blue_Transparent"
+                />
+
+
+        </LinearLayout>
+
+        <!--  THIRED ROW OF BUTTONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="16dp"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/other_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+
+                android:text="أخرى"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/BOKI_TextPrimary_Transparent"
+                android:padding="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_TextPrimary_More_Transparent"
+                />
+
+            <Button
+                android:id="@+id/entertainment_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/BOKI_Orange"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:backgroundTint="@color/BOKI_Orange_Transparent"
+                android:fontFamily="@font/cairo"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="ترفية"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/BOKI_Orange"
+                app:strokeWidth="3dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
