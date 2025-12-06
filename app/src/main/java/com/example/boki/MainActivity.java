@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 2. Create the DatePickerDialog, passing the current date as the default
         DatePickerDialog openDatePickerDialog = new DatePickerDialog(MainActivity.this, R.style.DialogTheme, (view, year, month, dayOfMonth) -> {
-            dialogBinding.datePickerBtn.setText(String.format(Locale.getDefault(), "%d/%d/%d", dayOfMonth, month + 1, year));
+            dialogBinding.datePickerBtn.setText(String.format(Locale.getDefault(), "%d-%d-%d", dayOfMonth, month + 1, year));
         }, currentYear, currentMonth, currentDay); // <-- Use current date variables here
 
         openDatePickerDialog.show();
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         int currentMinute = c.get(java.util.Calendar.MINUTE);
 
         // 2. Create the TimePickerDialog, passing the current time as the default
-        TimePickerDialog dialog = new TimePickerDialog(MainActivity.this, R.style.DialogTheme, (view, hourOfDay, minute) -> {
+        TimePickerDialog dialog = new TimePickerDialog(MainActivity.this, R.style.timepukerTheme, (view, hourOfDay, minute) -> {
             // This format will correctly show AM/PM
             dialogBinding.timePickerBtn.setText(String.format(Locale.getDefault(), "%d:%02d %s", (hourOfDay == 0 || hourOfDay == 12) ? 12 : hourOfDay % 12, minute, hourOfDay < 12 ? "AM" : "PM"));
         }, currentHour, currentMinute, false); // <-- Use current time variables here. 'false' for 12-hour format with AM/PM selector.

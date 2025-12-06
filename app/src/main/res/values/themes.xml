@@ -46,6 +46,23 @@
         <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
     </style>
 
+    <!--  Style for the Datepicker Dialogs  -->
+    <style name="timepukerTheme" parent="Theme.Material3.DayNight.Dialog">
+        <!-- ===== HEADER and SELECTION COLOR ===== -->
+        <item name="colorAccent">@color/BOKI_MainPurple</item>
+        <!-- ===== BACKGROUND COLOR ===== -->
+        <item name="android:windowBackground">@color/BOKI_MidPurple</item>
+        <!-- ===== TEXT COLOR ===== -->
+        <!-- This is the main fix. It controls the color of the calendar day numbers and the header date -->
+        <item name="colorOnSurface">@color/BOKI_TextPrimary</item>
+        <item name="colorOnSurfaceVariant">@color/BOKI_TextPrimary</item>
+        <item name="cardCornerRadius">25dp</item>
+
+
+        <!-- This controls the color of the "OK" and "CANCEL" buttons -->
+        <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
+    </style>
+
 
 
 

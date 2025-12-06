@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cairo"
                     android:gravity="center"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="8dp"
                     android:text="10.00"
                     android:textColor="@color/BOKI_TextPrimary"
                     android:textSize="26dp"
