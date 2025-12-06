@@ -12,7 +12,8 @@
       <FrameLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:id="@+id/frame_layout"/>
+          android:id="@+id/frame_layout"
+          app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
       <!-- BottomAppBar -->
       <com.google.android.material.bottomappbar.BottomAppBar
