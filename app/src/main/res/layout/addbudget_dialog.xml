@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="16dp"
+    >
+
+    <!-- CARD ELEMENT CONTINER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/BOKI_DarkPurple"
+        android:orientation="vertical">
+
+        <!-- TOP BAR SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/cancel_dialog_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="هوّنت"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/BOKI_MainPurple"
+                    android:textStyle="bold"
+                    android:layout_marginRight="200dp"
+                    android:textSize="16dp"
+                    android:padding="0dp"
+                    android:textAlignment="textEnd"
+                    android:fontFamily="@font/cairo"
+                    android:backgroundTint="@android:color/transparent"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/category_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="85dp"
+                    app:strokeWidth="3dp"
+                    app:strokeColor="@color/BOKI_MainPurple"
+                    app:cornerRadius="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:padding="8dp"
+                    android:backgroundTint="@color/BOKI_MainPurple_Transparent"
+                    app:icon="@drawable/moneybag"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="28dp"
+                    app:iconTint="@color/BOKI_MainPurple"
+                    />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- ADD OPERATION NAME SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginVertical="16dp">
+
+            <EditText
+                android:id="@+id/budget_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/cairo"
+                android:hint="اسم الميزانية"
+                android:padding="8dp"
+                android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextPrimary_Transparent"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:inputType="textFilter"
+                android:textAlignment="viewEnd"/>
+
+        </LinearLayout>
+
+        <!-- ADD OPERATION AMOUNT SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="المبلغ"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:layout_gravity="center"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_view_transparent"
+                android:backgroundTint="@color/BOKI_TextPrimary"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="4dp"
+                >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/riyal_symbol" />
+
+            <EditText
+                android:id="@+id/budget_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/cairo"
+                android:padding="4dp"
+                android:hint="0.00"
+                android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextSecondary"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:inputType="number"/>
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/coin"
+                />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- PICK DATE AND TIME SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:padding="16dp"
+            android:background="@drawable/section_bg"
+            android:orientation="vertical"
+            >
+            <!-- Pick Cycle -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/circle_view_transparent"
+                android:backgroundTint="@color/BOKI_TextPrimary"
+                >
+
+                <Button
+                    android:id="@+id/month_days_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="شهري"
+                    android:fontFamily="@font/cairo"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/BOKI_MainPurple"
+                    android:padding="2dp"
+                    app:cornerRadius="25dp"
+                    android:backgroundTint="@android:color/transparent"
+                    />
+
+                <Button
+                    android:id="@+id/week_days_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="أسبوعي"
+                    android:layout_marginHorizontal="4dp"
+                    android:fontFamily="@font/cairo"
+                    android:textStyle="bold"
+                    android:textColor="@color/BOKI_MainPurple"
+                    android:textSize="14dp"
+                    android:padding="2dp"
+                    app:cornerRadius="25dp"
+                    android:backgroundTint="@android:color/transparent"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="يوم بداية الميزانية"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:layout_gravity="center"
+                />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <!-- for month days piker -->
+                <NumberPicker
+                    android:id="@+id/day_of_month_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/NumberPickerTheme"
+                    android:visibility="gone"
+                />
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:scrollbars="none"
+                    android:layoutDirection="rtl">
+
+
+                    <LinearLayout
+                        android:id="@+id/dayOfWeekScrollview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- NOTE 2: Replace Chips with regular Buttons -->
+                        <!-- We will use a custom style called "DayButton" -->
+
+                        <Button
+                            android:id="@+id/button_sunday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الأحد" />
+
+                        <Button
+                            android:id="@+id/button_monday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الاثنين" />
+
+                        <Button
+                            android:id="@+id/button_tuesday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الثلاثاء" />
+
+                        <!-- ... Add the rest of the buttons for Wednesday, Thursday, etc. ... -->
+                        <Button
+                            android:id="@+id/button_wednesday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الأربعاء" />
+
+                        <Button
+                            android:id="@+id/button_thursday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الخميس" />
+
+                        <Button
+                            android:id="@+id/button_friday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الجمعة" />
+
+                        <Button
+                            android:id="@+id/button_saturday"
+                            style="@style/DayButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="السبت" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </FrameLayout>
+        </LinearLayout>
+
+
+        <!-- SAVE BUTTON SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/crate_budget_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="إنشاء الميزانية"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:padding="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/BOKI_MainPurple"
+                />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

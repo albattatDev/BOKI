@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="12dp"
+    app:cardCornerRadius="16dp"
+    android:backgroundTint="@color/BOKI_MidPurple"
+    android:layout_marginBottom="16dp">
+
+    <!-- NOTE 1: Switched from LinearLayout to RelativeLayout -->
+    <!-- This allows us to align views to the parent edges. -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        >
+
+        <!-- RIGHT SIDE: budget Icon -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/category_icon"
+            android:layout_width="60dp"
+            android:layout_height="65dp"
+            app:strokeWidth="3dp"
+            app:strokeColor="@color/BOKI_MainPurple"
+            app:cornerRadius="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:backgroundTint="@color/BOKI_MainPurple_Transparent"
+            app:icon="@drawable/moneybag"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="28dp"
+            app:iconTint="@color/BOKI_MainPurple"
+             />
+
+        <!-- MIDDLE SECTION: Title and amount -->
+        <!-- This layout is positioned to the left of the category icon -->
+        <LinearLayout
+            android:id="@+id/title_amount_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/category_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/budget_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                tools:text="المصروف الشهري" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    app:srcCompat="@drawable/riyal_symbol"
+                    tools:ignore="ContentDescription"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/amount_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/cairo"
+                    android:textColor="@color/BOKI_TextPrimary"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    tools:text="2000.00" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!-- LEFT SIDE: Left days -->
+        <!-- NOTE 2: This whole section is aligned to the start of the parent -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/leftDays_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                tools:text="تنتهي خلال ٣ أيام" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

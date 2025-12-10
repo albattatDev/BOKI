@@ -1,17 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BudgetFragment"
+    android:orientation="vertical"
+    android:padding="20dp"
     android:background="@color/BOKI_DarkPurple">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Budget"
-        android:gravity="center"
-        android:textColor="@color/BOKI_TextPrimary"/>
+    <!--Add budget Section-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="8dp">
+        <!-- RIGHT SIDE: budget Icon -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_budget_btn"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            app:cornerRadius="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:backgroundTint="@color/BOKI_MainPurple_Transparent"
+            app:icon="@drawable/moneybag_plus"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="26dp"
+            app:iconTint="@color/BOKI_MainPurple"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 
-</FrameLayout>
+    <!--Text Section-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ميزانياتك"
+            android:textSize="26dp"
+            android:textColor="@color/BOKI_TextPrimary"
+            android:textStyle="bold"
+            android:fontFamily="@font/cairo"/>
+    </LinearLayout>
+
+    <!--Recyclerview Section-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expenses_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/budget_list_item"
+        android:paddingBottom="110dp"
+        android:clipToPadding="false"/>
+
+
+
+</LinearLayout>

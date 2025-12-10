@@ -24,7 +24,9 @@
 
 
     <!--  color with ~25% opacity -->
+    <color name="BOKI_MainPurple_60Transparent">#60692DDC</color>
     <color name="BOKI_MainPurple_Transparent">#20692DDC</color>
+    <color name="BOKI_TextPrimary_70Transparent">#70FFFFFF</color>
     <color name="BOKI_TextPrimary_Transparent">#40FFFFFF</color>
     <color name="BOKI_TextPrimary_More_Transparent">#10FFFFFF</color>
     <color name="BOKI_MidPurple_Transparent">#40160F21</color>

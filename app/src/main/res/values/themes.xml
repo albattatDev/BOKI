@@ -63,7 +63,35 @@
         <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
     </style>
 
+    <!-- In res/values/themes.xml or styles.xml -->
+    <!-- In res/values/themes.xml or styles.xml -->
 
+    <style name="DayButton" parent="Widget.AppCompat.Button.Borderless">
+        <!-- NOTE 3: CRITICAL - Make the button background transparent -->
+        <item name="android:background">@android:color/transparent</item>
 
+        <!-- NOTE 4: Set the font and text style -->
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <!-- Use a color selector to change text color on selection -->
+        <item name="android:textColor">@color/BOKI_TextSecondary</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+
+        <!-- NOTE 5: Add the dot drawable to the start of the text -->
+        <!-- This drawable will be programmatically shown/hidden -->
+        <item name="android:drawableStart">@drawable/dot_indicator</item>
+        <item name="android:drawablePadding">8dp</item>
+
+        <!-- Set the color of the drawable -->
+        <item name="android:drawableTint">@color/BOKI_MainPurple</item>
+    </style>
+
+    <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/BOKI_MainPurple</item>
+        <item name="android:textColorPrimary">@color/BOKI_TextPrimary</item>
+        <item name="android:fontFamily">@font/cairo</item>
+    </style>
 
 </resources>
