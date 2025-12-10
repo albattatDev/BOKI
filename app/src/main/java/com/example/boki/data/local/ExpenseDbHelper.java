@@ -12,12 +12,13 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
     
     // Database Configuration
     private static final String DATABASE_NAME = "expenses.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Updated for budget table
     
-    // Table Name
+    // Table Names
     public static final String TABLE_EXPENSE = "expense";
+    public static final String TABLE_BUDGET = "budget";
     
-    // Column Names
+    // Expense Column Names
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_AMOUNT = "amount";
@@ -25,6 +26,15 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TIME = "time";
+    
+    // Budget Column Names
+    public static final String COLUMN_BUDGET_ID = "id";
+    public static final String COLUMN_BUDGET_NAME = "name";
+    public static final String COLUMN_BUDGET_AMOUNT = "amount";
+    public static final String COLUMN_BUDGET_START_DATE = "start_date";
+    public static final String COLUMN_BUDGET_CYCLE_TYPE = "cycle_type";
+    public static final String COLUMN_BUDGET_CYCLE_VALUE = "cycle_value";
+    public static final String COLUMN_BUDGET_ACTIVE = "active";
     
     // Index name for performance optimization
     private static final String INDEX_DATE = "idx_expense_date";
@@ -46,9 +56,24 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
         "CREATE INDEX " + INDEX_DATE + " ON " + TABLE_EXPENSE + 
         " (" + COLUMN_DATE + " DESC);";
     
-    // SQL Statement: Drop table (used in upgrades)
+    // SQL Statement: Create budget table
+    private static final String SQL_CREATE_BUDGET_TABLE = 
+        "CREATE TABLE " + TABLE_BUDGET + " (" +
+            COLUMN_BUDGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_BUDGET_NAME + " TEXT NOT NULL, " +
+            COLUMN_BUDGET_AMOUNT + " REAL NOT NULL, " +
+            COLUMN_BUDGET_START_DATE + " TEXT NOT NULL, " +
+            COLUMN_BUDGET_CYCLE_TYPE + " TEXT NOT NULL, " +
+            COLUMN_BUDGET_CYCLE_VALUE + " INTEGER NOT NULL, " +
+            COLUMN_BUDGET_ACTIVE + " INTEGER NOT NULL DEFAULT 0" +
+        ");";
+    
+    // SQL Statement: Drop tables (used in upgrades)
     private static final String SQL_DROP_TABLE = 
         "DROP TABLE IF EXISTS " + TABLE_EXPENSE + ";";
+    
+    private static final String SQL_DROP_BUDGET_TABLE = 
+        "DROP TABLE IF EXISTS " + TABLE_BUDGET + ";";
     
     /**
      * Constructor - creates or opens the database
@@ -72,6 +97,9 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
         // Create index on date column for performance (US10 - Fast Data Loading)
         // This dramatically improves ORDER BY date DESC performance
         db.execSQL(SQL_CREATE_INDEX);
+        
+        // Create the budget table (US18-US22)
+        db.execSQL(SQL_CREATE_BUDGET_TABLE);
     }
     
     /**
@@ -87,13 +115,16 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Version 1: No upgrades yet, just drop and recreate
-        // TODO: When adding new columns/tables, use ALTER TABLE instead
-        // to preserve existing user data
+        // Upgrade from version 1 to 2: Add budget table
+        if (oldVersion < 2) {
+            // Add budget table without dropping expense table (preserve user data)
+            db.execSQL(SQL_CREATE_BUDGET_TABLE);
+        }
         
-        // For now, simple drop and recreate (acceptable for v1)
-        db.execSQL(SQL_DROP_TABLE);
-        onCreate(db);
+        // For future upgrades, use similar pattern to preserve data
+        // if (oldVersion < 3) {
+        //     db.execSQL("ALTER TABLE ...");
+        // }
         
         // Future upgrade examples:
         // if (oldVersion < 2) {

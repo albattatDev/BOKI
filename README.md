@@ -1,6 +1,6 @@
 # BOKI
 
-An Android application built with Java and Gradle.
+An Android expense tracking application with budget management built with Java and Gradle.
 
 ## Project Information
 
@@ -9,6 +9,7 @@ An Android application built with Java and Gradle.
 - **Target SDK**: 36
 - **Compile SDK**: 36
 - **Version**: 1.0 (versionCode: 1)
+- **Database Version**: 2 (with Budget support)
 
 ## Technologies Used
 
@@ -76,7 +77,9 @@ BOKI/
 │   │   └── test/              # Unit tests
 │   └── build.gradle.kts       # App-level build configuration
 ├── gradle/                     # Gradle wrapper and version catalog
-└── build.gradle.kts           # Project-level build configuration
+├── build.gradle.kts           # Project-level build configuration
+├── DATABASE_ERD.md            # Database schema documentation
+└── README.md                  # This file
 ```
 
 ## Configuration Files
@@ -92,11 +95,3 @@ BOKI/
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## License
-
-[Add your license information here]
-
-## Contact
-
-[Add your contact information here]
