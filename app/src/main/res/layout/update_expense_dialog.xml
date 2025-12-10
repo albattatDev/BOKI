@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:cardElevation="10dp" app:cardCornerRadius="16dp">
+
+    <!-- CARD ELEMENT CONTAINER -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/BOKI_DarkPurple" android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- TOP BAR SECTION -->
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <!-- "Cancel" Button -->
+            <Button android:id="@+id/cancel_dialog_btn" android:layout_width="wrap_content"
+                android:layout_height="32dp" android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/transparent" android:fontFamily="@font/cairo"
+                android:padding="0dp" android:text="هوّنت" android:textAlignment="textStart"
+                android:textColor="@color/BOKI_MainPurple" android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <!-- Category Button -->
+            <com.google.android.material.button.MaterialButton android:id="@+id/category_btn"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/BOKI_MainPurple_Transparent"
+                android:fontFamily="@font/cairo" android:gravity="center" android:text="أخرى"
+                android:textSize="16dp" android:textStyle="bold" app:cornerRadius="100dp"
+                app:strokeColor="@color/BOKI_MainPurple" app:strokeWidth="3dp" />
+
+            <!-- NEW: "Delete" Button -->
+            <ImageButton android:id="@+id/delete_expense_btn" android:layout_width="48dp"
+                android:layout_height="48dp" android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_delete" app:tint="@color/BOKI_LightRead" />
+
+        </RelativeLayout>
+
+        <!-- ADD OPERATION NAME SECTION (Unchanged) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:layout_marginVertical="16dp"
+            android:gravity="center">
+
+            <EditText android:id="@+id/operation_name" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent" android:fontFamily="@font/cairo"
+                android:hint="اسم العملية" android:inputType="textFilter" android:padding="8dp"
+                android:textAlignment="viewEnd" android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextPrimary_Transparent" android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <ImageView android:layout_width="35dp" android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_view_transparent" android:padding="8dp"
+                android:src="@drawable/storefront" app:tint="@color/BOKI_MainPurple" />
+        </LinearLayout>
+
+        <!-- ADD OPERATION AMOUNT SECTION (Unchanged) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:gravity="center">
+
+            <ImageView android:layout_width="26dp" android:layout_height="26dp"
+                android:layout_gravity="center" app:srcCompat="@drawable/riyal_symbol" />
+
+            <EditText android:id="@+id/operation_amount" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent" android:fontFamily="@font/cairo"
+                android:hint="0.00" android:inputType="numberDecimal" android:padding="8dp"
+                android:textColor="@color/BOKI_TextPrimary"
+                android:textColorHint="@color/BOKI_TextPrimary" android:textSize="26dp"
+                android:textStyle="bold" />
+
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_square_transparent"
+                app:srcCompat="@drawable/arrow_downward" app:tint="@color/BOKI_LightRead" />
+        </LinearLayout>
+
+        <!-- PICK DATE AND TIME SECTION (Unchanged) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="end" android:layout_marginVertical="16dp" android:gravity="end">
+
+            <Button android:id="@+id/time_picker_btn" android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:backgroundTint="@color/BOKI_TextPrimary_More_Transparent"
+                android:fontFamily="@font/cairo" android:padding="4dp" android:text="(am)HH:MM"
+                android:textColor="@color/BOKI_MainPurple" android:textSize="12dp"
+                android:textStyle="bold" app:cornerRadius="8dp" />
+
+            <Button android:id="@+id/date_picker_btn" android:layout_width="wrap_content"
+                android:layout_height="36dp" android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/BOKI_TextPrimary_More_Transparent"
+                android:fontFamily="@font/cairo" android:padding="4dp" android:text="DD-MM-YYYY"
+                android:textColor="@color/BOKI_MainPurple" android:textSize="12dp"
+                android:textStyle="bold" app:cornerRadius="8dp" />
+
+            <ImageView android:layout_width="35dp" android:layout_height="35dp"
+                android:layout_gravity="center" android:padding="4dp"
+                android:src="@drawable/calendar_today" app:tint="@color/BOKI_MainPurple" />
+        </LinearLayout>
+
+        <!-- SAVE BUTTON SECTION (Unchanged) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <Button android:id="@+id/save_opration_btn" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:backgroundTint="@color/BOKI_MainPurple"
+                android:fontFamily="@font/cairo" android:gravity="center" android:padding="16dp"
+                android:text="حفظ" android:textSize="18dp" android:textStyle="bold"
+                app:cornerRadius="100dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
