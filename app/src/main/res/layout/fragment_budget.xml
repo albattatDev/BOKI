@@ -51,17 +51,62 @@
             android:fontFamily="@font/cairo"/>
     </LinearLayout>
 
-    <!--Recyclerview Section-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expenses_recycler_view"
+    <!--Empty State and Recyclerview Section-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginVertical="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/budget_list_item"
-        android:paddingBottom="110dp"
-        android:clipToPadding="false"/>
+        android:layout_weight="1">
+
+        <!--Recyclerview Section-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expenses_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/budget_list_item"
+            android:paddingBottom="110dp"
+            android:clipToPadding="false"/>
+
+        <!--Empty State Message-->
+        <LinearLayout
+            android:id="@+id/empty_state_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/moneybag"
+                android:alpha="0.3"
+                app:tint="@color/BOKI_MainPurple"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="لا توجد ميزانيات بعد"
+                android:textSize="20dp"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:fontFamily="@font/cairo"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="اضغط على الزر أعلاه لإنشاء ميزانية جديدة"
+                android:textSize="14dp"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:fontFamily="@font/cairo"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+    </FrameLayout>
 
 
 

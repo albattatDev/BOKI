@@ -126,6 +126,7 @@ public class BudgetRepository {
     
     /**
      * US19: Delete a budget from the database
+     * If the deleted budget was active, activate the most recent remaining budget
      * 
      * @param id The budget ID to delete
      * @return true if deletion was successful, false otherwise
@@ -133,11 +134,44 @@ public class BudgetRepository {
     public boolean deleteBudget(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         
-        String whereClause = ExpenseDbHelper.COLUMN_BUDGET_ID + " = ?";
-        String[] whereArgs = { String.valueOf(id) };
-        
-        int rowsDeleted = db.delete(ExpenseDbHelper.TABLE_BUDGET, whereClause, whereArgs);
-        return rowsDeleted > 0;
+        try {
+            db.beginTransaction();
+            
+            // Check if the budget being deleted is active
+            String checkQuery = "SELECT " + ExpenseDbHelper.COLUMN_BUDGET_ACTIVE + 
+                              " FROM " + ExpenseDbHelper.TABLE_BUDGET + 
+                              " WHERE " + ExpenseDbHelper.COLUMN_BUDGET_ID + " = ?";
+            Cursor cursor = db.rawQuery(checkQuery, new String[]{String.valueOf(id)});
+            
+            boolean wasActive = false;
+            if (cursor.moveToFirst()) {
+                wasActive = cursor.getInt(0) == 1;
+            }
+            cursor.close();
+            
+            // Delete the budget
+            String whereClause = ExpenseDbHelper.COLUMN_BUDGET_ID + " = ?";
+            String[] whereArgs = { String.valueOf(id) };
+            int rowsDeleted = db.delete(ExpenseDbHelper.TABLE_BUDGET, whereClause, whereArgs);
+            
+            // If deleted budget was active, activate the most recent remaining budget
+            if (rowsDeleted > 0 && wasActive) {
+                String activateQuery = "UPDATE " + ExpenseDbHelper.TABLE_BUDGET + 
+                                     " SET " + ExpenseDbHelper.COLUMN_BUDGET_ACTIVE + " = 1" +
+                                     " WHERE " + ExpenseDbHelper.COLUMN_BUDGET_ID + " = (" +
+                                     "   SELECT " + ExpenseDbHelper.COLUMN_BUDGET_ID +
+                                     "   FROM " + ExpenseDbHelper.TABLE_BUDGET +
+                                     "   ORDER BY " + ExpenseDbHelper.COLUMN_BUDGET_ID + " DESC" +
+                                     "   LIMIT 1" +
+                                     ")";
+                db.execSQL(activateQuery);
+            }
+            
+            db.setTransactionSuccessful();
+            return rowsDeleted > 0;
+        } finally {
+            db.endTransaction();
+        }
     }
     
     /**

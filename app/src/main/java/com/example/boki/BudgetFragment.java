@@ -69,27 +69,48 @@ public class BudgetFragment extends Fragment implements BudgetAdapter.OnBudgetCl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Setup RecyclerView
-        budgetRecyclerView = binding.expenseRecyclerView; // Reusing the RecyclerView from layout
-        budgetRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        budgetAdapter = new BudgetAdapter(getContext(), this);
-        budgetRecyclerView.setAdapter(budgetAdapter);
+        try {
+            // Setup RecyclerView
+            budgetRecyclerView = binding.expensesRecyclerView; // RecyclerView ID: expenses_recycler_view
+            if (budgetRecyclerView != null) {
+                budgetRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                budgetAdapter = new BudgetAdapter(getContext(), this);
+                budgetRecyclerView.setAdapter(budgetAdapter);
+            }
 
-        // NOTE: Access views directly through the binding object.
-        binding.addBudgetBtn.setOnClickListener(v -> {
-            showAddBudgetDialog();
-        });
-        
-        // Load and display existing budgets
-        loadBudgets();
+            // NOTE: Access views directly through the binding object.
+            binding.addBudgetBtn.setOnClickListener(v -> {
+                showAddBudgetDialog();
+            });
+            
+            // Load and display existing budgets
+            loadBudgets();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "خطأ في تهيئة الصفحة", Toast.LENGTH_SHORT).show();
+        }
     }
     
     /**
      * Load all budgets from database and display them
      */
     private void loadBudgets() {
-        List<Budget> budgets = budgetRepository.getAllBudgets();
-        budgetAdapter.setBudgets(budgets);
+        try {
+            List<Budget> budgets = budgetRepository.getAllBudgets();
+            if (budgetAdapter != null) {
+                budgetAdapter.setBudgets(budgets);
+            }
+            
+            // Show/hide empty state based on budget count
+            if (budgets == null || budgets.isEmpty()) {
+                binding.emptyStateLayout.setVisibility(View.VISIBLE);
+                binding.expensesRecyclerView.setVisibility(View.GONE);
+            } else {
+                binding.emptyStateLayout.setVisibility(View.GONE);
+                binding.expensesRecyclerView.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "خطأ في تحميل الميزانيات", Toast.LENGTH_SHORT).show();
+        }
     }
     
     /**
@@ -258,31 +279,41 @@ public class BudgetFragment extends Fragment implements BudgetAdapter.OnBudgetCl
                 cycleValue = dialogBinding.dayOfMonthPicker.getValue(); // Get value from NumberPicker (1-31)
             }
 
-            // Get today's date as start date
-            String startDate = dateFormat.format(new Date());
-            
-            // Create budget object (will be set as active by default)
-            Budget budget = new Budget(budgetName, amount, startDate, cycleType, cycleValue, true);
-            
-            // Insert into database
-            long budgetId = budgetRepository.insertBudget(budget);
-            
-            if (budgetId > 0) {
-                Toast.makeText(getContext(), "تم إنشاء الميزانية بنجاح", Toast.LENGTH_SHORT).show();
+            try {
+                // Get today's date as start date
+                String startDate = dateFormat.format(new Date());
                 
-                // Reload budgets
-                loadBudgets();
+                // Create budget object (will be set as active by default)
+                Budget budget = new Budget(budgetName, amount, startDate, cycleType, cycleValue, true);
                 
-                // Close dialog
+                // Insert into database
+                long budgetId = budgetRepository.insertBudget(budget);
+                
+                if (budgetId > 0) {
+                    // Close dialog first
+                    dialog.dismiss();
+                    
+                    // Show success message and reload on UI thread
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "تم إنشاء الميزانية بنجاح", Toast.LENGTH_SHORT).show();
+                            loadBudgets();
+                        });
+                    }
+                } else {
+                    Toast.makeText(getContext(), "فشل في إنشاء الميزانية", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
                 dialog.dismiss();
-            } else {
-                Toast.makeText(getContext(), "فشل في إنشاء الميزانية", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "حدث خطأ: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 
     /**
@@ -324,12 +355,21 @@ public class BudgetFragment extends Fragment implements BudgetAdapter.OnBudgetCl
 
         // Delete button (US19)
         dialogBinding.deleteBtn.setOnClickListener(v -> {
-            if (budgetRepository.deleteBudget(budget.getId())) {
-                Toast.makeText(getContext(), "تم حذف الميزانية", Toast.LENGTH_SHORT).show();
-                loadBudgets();
+            try {
+                if (budgetRepository.deleteBudget(budget.getId())) {
+                    dialog.dismiss();
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "تم حذف الميزانية", Toast.LENGTH_SHORT).show();
+                            loadBudgets();
+                        });
+                    }
+                } else {
+                    Toast.makeText(getContext(), "فشل في حذف الميزانية", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
                 dialog.dismiss();
-            } else {
-                Toast.makeText(getContext(), "فشل في حذف الميزانية", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "حدث خطأ: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -418,39 +458,52 @@ public class BudgetFragment extends Fragment implements BudgetAdapter.OnBudgetCl
                 budget.setCycleType(cycleType);
                 budget.setCycleValue(cycleValue);
 
-                if (budgetRepository.updateBudget(budget) > 0) {
-                    Toast.makeText(getContext(), "تم تحديث الميزانية", Toast.LENGTH_SHORT).show();
-                    loadBudgets();
+                try {
+                    if (budgetRepository.updateBudget(budget) > 0) {
+                        dialog.dismiss();
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                Toast.makeText(getContext(), "تم تحديث الميزانية", Toast.LENGTH_SHORT).show();
+                                loadBudgets();
+                            });
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "فشل في تحديث الميزانية", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
                     dialog.dismiss();
-                } else {
-                    Toast.makeText(getContext(), "فشل في تحديث الميزانية", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "حدث خطأ: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "المبلغ غير صحيح", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // US22: Add "Start New Cycle" button
-        if (dialogBinding.getRoot() instanceof ViewGroup) {
-            Button startNewCycleBtn = new Button(getContext());
-            startNewCycleBtn.setText("بدء دورة جديدة");
-            startNewCycleBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                getResources().getColor(R.color.BOKI_MainPurple)));
-            startNewCycleBtn.setTextColor(getResources().getColor(R.color.BOKI_TextPrimary));
-            startNewCycleBtn.setOnClickListener(v -> {
+        // US22: Start New Cycle button
+        dialogBinding.startNewCycleBtn.setOnClickListener(v -> {
+            try {
                 if (budgetRepository.startNewCycle(budget)) {
-                    Toast.makeText(getContext(), "تم بدء دورة جديدة", Toast.LENGTH_SHORT).show();
-                    loadBudgets();
                     dialog.dismiss();
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "تم بدء دورة جديدة", Toast.LENGTH_SHORT).show();
+                            loadBudgets();
+                        });
+                    }
                 } else {
                     Toast.makeText(getContext(), "فشل في بدء دورة جديدة", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            } catch (Exception e) {
+                dialog.dismiss();
+                Toast.makeText(getContext(), "حدث خطأ: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 
     /**

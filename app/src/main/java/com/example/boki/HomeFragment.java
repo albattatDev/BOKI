@@ -64,28 +64,34 @@ public class HomeFragment extends Fragment {
      * Shows the remaining balance from the active budget
      */
     private void updateRemainingBalance() {
-        Budget activeBudget = budgetRepository.getActiveBudget();
-        
-        if (activeBudget != null) {
-            double remainingBalance = budgetRepository.getRemainingBalance(activeBudget);
+        try {
+            Budget activeBudget = budgetRepository.getActiveBudget();
             
-            // Format the balance to 2 decimal places
-            String formattedBalance = String.format(Locale.getDefault(), "%.2f", remainingBalance);
-            remainingBalanceTextView.setText(formattedBalance);
-            
-            // Optional: Change text color based on remaining balance
-            if (remainingBalance < 0) {
-                // Over budget - show in red
-                remainingBalanceTextView.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            } else if (remainingBalance < activeBudget.getAmount() * 0.2) {
-                // Less than 20% remaining - show warning color
-                remainingBalanceTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+            if (activeBudget != null) {
+                double remainingBalance = budgetRepository.getRemainingBalance(activeBudget);
+                
+                // Format the balance to 2 decimal places - always show absolute value
+                String formattedBalance = String.format(Locale.getDefault(), "%.2f", Math.abs(remainingBalance));
+                remainingBalanceTextView.setText(formattedBalance);
+                
+                // Optional: Change text color based on remaining balance
+                if (remainingBalance < 0) {
+                    // Over budget - show in red
+                    remainingBalanceTextView.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                } else if (remainingBalance < activeBudget.getAmount() * 0.2) {
+                    // Less than 20% remaining - show warning color
+                    remainingBalanceTextView.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                } else {
+                    // Sufficient balance - normal color
+                    remainingBalanceTextView.setTextColor(getResources().getColor(R.color.BOKI_TextPrimary));
+                }
             } else {
-                // Sufficient balance - normal color
+                // No active budget
+                remainingBalanceTextView.setText("0.00");
                 remainingBalanceTextView.setTextColor(getResources().getColor(R.color.BOKI_TextPrimary));
             }
-        } else {
-            // No active budget
+        } catch (Exception e) {
+            // Handle any errors gracefully
             remainingBalanceTextView.setText("0.00");
             remainingBalanceTextView.setTextColor(getResources().getColor(R.color.BOKI_TextPrimary));
         }

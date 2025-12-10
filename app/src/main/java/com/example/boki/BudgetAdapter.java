@@ -78,7 +78,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
             
             budgetTitle = itemView.findViewById(R.id.budget_title_id);
             budgetAmount = itemView.findViewById(R.id.amount_id);
-            daysLeft = itemView.findViewById(R.id.date_id); // Reusing this TextView for days left
+            daysLeft = itemView.findViewById(R.id.leftDays_id); // Use correct ID from layout
             
             // Set click listener for the entire item
             itemView.setOnClickListener(v -> {
