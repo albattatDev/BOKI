@@ -10,14 +10,12 @@
     android:backgroundTint="@color/BOKI_DarkPurple"
     android:layout_marginBottom="16dp">
 
-    <!-- NOTE 1: Switched from LinearLayout to RelativeLayout -->
-    <!-- This allows us to align views to the parent edges. -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:padding="12dp">
 
-        <!-- RIGHT SIDE: Category Icon -->
+        <!-- RIGHT SIDE: Category Icon is now the only element here -->
         <ImageView
             android:id="@+id/category_icon"
             android:layout_width="40dp"
@@ -30,17 +28,17 @@
             tools:ignore="ContentDescription" />
 
         <!-- MIDDLE SECTION: Title and Date -->
-        <!-- This layout is positioned to the left of the category icon -->
         <LinearLayout
             android:id="@+id/title_date_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/category_icon"
+            android:layout_toEndOf="@id/left_section_layout"
             android:layout_centerVertical="true"
             android:layout_marginEnd="12dp"
             android:orientation="vertical"
             android:gravity="end">
-
+            <!-- Content remains the same -->
             <TextView
                 android:id="@+id/operation_title_id"
                 android:layout_width="wrap_content"
@@ -50,12 +48,10 @@
                 android:textSize="16dp"
                 android:textStyle="bold"
                 tools:text="STC" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/time_id"
                     android:layout_width="wrap_content"
@@ -64,7 +60,6 @@
                     android:textColor="@color/BOKI_TextSecondary"
                     android:textSize="12dp"
                     tools:text="09:02 AM" />
-
                 <TextView
                     android:id="@+id/date_id"
                     android:layout_width="wrap_content"
@@ -79,15 +74,15 @@
 
 
         <!-- LEFT SIDE: Amount and Type Icon -->
-        <!-- NOTE 2: This whole section is aligned to the start of the parent -->
         <LinearLayout
+            android:id="@+id/left_section_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
+            <!-- Content remains the same -->
             <ImageView
                 android:id="@+id/transaction_type_icon"
                 android:layout_width="22dp"

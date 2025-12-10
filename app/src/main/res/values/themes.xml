@@ -2,68 +2,66 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BOKI" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color -->
-         <item name="colorPrimary">@color/BOKI_MainPurple</item>
-         <item name="colorPrimaryVariant">@color/BOKI_MainPurple</item>
+        <item name="colorPrimary">@color/BOKI_MainPurple</item>
+        <item name="colorPrimaryVariant">@color/BOKI_MainPurple</item>
     </style>
 
     <style name="Theme.BOKI" parent="Base.Theme.BOKI" />
 
-
-    <!-- Circla shape for FAB -->
+    <!-- ... other styles like ShapeAppearance and BottomNavTextStyle are fine ... -->
     <style name="ShapeAppearance.App.Circle" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-
-    <!-- font for BottomNav -->
     <style name="BottomNavTextStyle" parent="TextAppearance.AppCompat.Caption">
         <item name="android:fontFamily">@font/cairo</item>
-        <item name="android:textSize">12sp</item> <!-- Optional: Adjust text size if needed -->
+        <item name="android:textSize">12sp</item>
     </style>
-
-
-
-    <!-- Add this style for the active indicator -->
     <style name="App.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/BOKI_MainPurple</item>
     </style>
 
-    <!--  Style for the Datepicker Dialogs  -->
-    <style name="DialogTheme" parent="Theme.Material3.DayNight.Dialog">
-        <!-- ===== HEADER and SELECTION COLOR ===== -->
-        <item name="colorAccent">@color/BOKI_MainPurple</item>
-        <!-- ===== BACKGROUND COLOR ===== -->
-        <item name="android:windowBackground">@color/BOKI_MidPurple</item>
-        <!-- ===== TEXT COLOR ===== -->
-        <!-- This is the main fix. It controls the color of the calendar day numbers and the header date -->
-        <item name="colorOnSurface">@color/BOKI_TextPrimary</item>
-        <item name="colorOnSurfaceVariant">@color/BOKI_TextPrimary</item>
+
+    <!--  Style for the general Alert Dialogs (Category, Delete Confirmation)  -->
+    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!-- Background color of the entire dialog -->
+        <item name="android:background">@color/BOKI_DarkPurple</item>
+        <!-- Title and message text color -->
         <item name="android:textColorPrimary">@color/BOKI_TextPrimary</item>
-        <item name="android:textColorSecondary">@color/BOKI_TextSecondary</item>
-
-
-        <!-- This controls the color of the "OK" and "CANCEL" buttons -->
-        <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
-    </style>
-
-    <!--  Style for the Datepicker Dialogs  -->
-    <style name="timepukerTheme" parent="Theme.Material3.DayNight.Dialog">
-        <!-- ===== HEADER and SELECTION COLOR ===== -->
+        <!-- Color for the action buttons ("مسح", "Cancel") -->
         <item name="colorAccent">@color/BOKI_MainPurple</item>
-        <!-- ===== BACKGROUND COLOR ===== -->
-        <item name="android:windowBackground">@color/BOKI_MidPurple</item>
-        <!-- ===== TEXT COLOR ===== -->
-        <!-- This is the main fix. It controls the color of the calendar day numbers and the header date -->
-        <item name="colorOnSurface">@color/BOKI_TextPrimary</item>
-        <item name="colorOnSurfaceVariant">@color/BOKI_TextPrimary</item>
-        <item name="cardCornerRadius">25dp</item>
-
-
-        <!-- This controls the color of the "OK" and "CANCEL" buttons -->
-        <item name="colorOnPrimaryContainer">@color/BOKI_MainPurple</item>
     </style>
 
+    <!--  Style for the Date and Time Picker Dialogs  -->
+    <style name="timepukerTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <!-- Background color of the dialog window -->
+        <item name="android:windowBackground">@color/BOKI_DarkPurple</item>
 
+        <!-- Main accent color (used for selected day, clock hands, headers) -->
+        <item name="colorAccent">@color/BOKI_MainPurple</item>
+        <item name="colorControlActivated">@color/BOKI_MainPurple</item>
 
+        <!-- === THIS IS THE FIX FOR WHITE TEXT === -->
+        <!-- Color for main text like day numbers and clock numbers -->
+        <item name="android:textColorPrimary">@color/BOKI_TextPrimary</item>
+        <!-- Color for secondary text like the year in the picker -->
+        <item name="android:textColorSecondary">@color/BOKI_TextSecondary</item>
+        <!-- Color for text that appears on top of the accent color (e.g., selected day number) -->
+        <item name="android:textColorPrimaryInverse">@color/BOKI_TextPrimary</item>
+
+        <!-- Color for the "OK" and "CANCEL" buttons -->
+        <item name="android:buttonStyle">@style/DatePickerButtons</item>
+    </style>
+
+    <!-- Helper style for the Date/Time Picker buttons -->
+    <style name="DatePickerButtons" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/BOKI_MainPurple</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TimePickerNumbersTheme" parent="timepukerTheme">
+        <!-- This overrides the text color to be black for the clock face -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+    </style>
 
 </resources>
