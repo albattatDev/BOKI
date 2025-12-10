@@ -35,7 +35,7 @@
             app:iconPadding="0dp"
             app:iconSize="28dp"
             app:iconTint="@color/BOKI_MainPurple"
-            tools:ignore="ContentDescription" />
+             />
 
         <!-- MIDDLE SECTION: Title and amount -->
         <!-- This layout is positioned to the left of the category icon -->
