@@ -16,9 +16,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") } // Corrected syntax for maven url
     }
 }
 
 rootProject.name = "BOKI"
 include(":app")
- 

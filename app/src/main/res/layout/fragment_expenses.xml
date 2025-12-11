@@ -1,17 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BudgetFragment"
+    android:orientation="vertical"
+    android:padding="20dp"
     android:background="@color/BOKI_DarkPurple">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--Text Section-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Expenses"
-        android:gravity="center"
-        android:textColor="@color/BOKI_TextPrimary"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="end">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="وضعك المالي"
+            android:textSize="26dp"
+            android:textColor="@color/BOKI_TextPrimary"
+            android:textStyle="bold"
+            android:fontFamily="@font/cairo"/>
+    </LinearLayout>
+
+    <!-- Pick Cycle -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="4dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/circle_view_transparent"
+        android:backgroundTint="@color/BOKI_TextPrimary"
+        >
+
+        <Button
+            android:id="@+id/month_days_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="شهري"
+            android:fontFamily="@font/cairo"
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            android:textSize="14dp"
+            android:textColor="@color/BOKI_MainPurple"
+            android:padding="2dp"
+            app:cornerRadius="25dp"
+            android:backgroundTint="@android:color/transparent"
+            />
+
+        <Button
+            android:id="@+id/week_days_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="أسبوعي"
+            android:layout_marginHorizontal="4dp"
+            android:fontFamily="@font/cairo"
+            android:textStyle="bold"
+            android:textColor="@color/BOKI_MainPurple"
+            android:textSize="14dp"
+            android:padding="2dp"
+            app:cornerRadius="25dp"
+            android:backgroundTint="@android:color/transparent"
+            />
+
+        <Button
+            android:id="@+id/days_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="يومي"
+            android:layout_marginHorizontal="4dp"
+            android:fontFamily="@font/cairo"
+            android:textStyle="bold"
+            android:textColor="@color/BOKI_MainPurple"
+            android:textSize="14dp"
+            android:padding="2dp"
+            app:cornerRadius="25dp"
+            android:backgroundTint="@android:color/transparent"
+            />
+    </LinearLayout>
+
+
+    <!-- NOTE 1: Main Container -->
+    <!-- This LinearLayout has a rounded background drawable and acts as the main card. -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/section_bg"
+        android:padding="8dp">
+
+        <!-- NOTE 2: Left Arrow Button -->
+        <!-- Aligned to the start of the parent. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prev_date_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+
+            android:background="@android:color/transparent"
+            app:icon="@drawable/keyboard_arrow_left"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="35dp"
+            app:iconTint="@color/BOKI_MainPurple"
+            app:tint="@color/BOKI_MainPurple" />
+
+        <!-- NOTE 3: Left Divider -->
+        <!-- A simple View used as a vertical line. It is positioned to the right of the left arrow. -->
+        <View
+            android:id="@+id/left_divider"
+            android:layout_width="1dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/prev_date_btn"
+            android:background="@color/BOKI_Divider" />
+
+        <!-- NOTE 4: Right Arrow Button -->
+        <!-- Aligned to the end of the parent. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_date_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:background="@android:color/transparent"
+            app:icon="@drawable/keyboard_arrow_right"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="35dp"
+            app:iconTint="@color/BOKI_MainPurple"
+            app:tint="@color/BOKI_MainPurple" />
+
+        <!-- NOTE 5: Right Divider -->
+        <!-- Positioned to the left of the right arrow. -->
+        <View
+            android:id="@+id/right_divider"
+            android:layout_width="1dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/next_date_btn"
+            android:background="@color/BOKI_Divider" />
+
+        <!-- NOTE 6: Center Content -->
+        <!-- This LinearLayout holds the date and amount. It's centered horizontally. -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Date Text -->
+            <TextView
+                android:id="@+id/date_range_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo"
+                android:textColor="@color/BOKI_TextSecondary"
+                android:textSize="14sp"
+                tools:text="الأحد، 9 نوفمبر — السبت، 15 نوفمبر" />
+
+            <!-- Amount Text with Icon -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- The small red icon -->
+                <ImageView
+                    android:id="@+id/transaction_type_icon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    app:srcCompat="@drawable/arrow_downward"
+                    app:tint="@color/BOKI_LightRead"
+                    android:background="@drawable/rounded_square_transparent"
+                    android:layout_marginHorizontal="8dp"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Currency Symbol -->
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/riyal_symbol" />
+
+                <!-- Amount -->
+                <TextView
+                    android:id="@+id/amount_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cairo"
+                    android:textColor="@color/BOKI_TextPrimary"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="8dp"
+                    tools:text="583.81" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Chart Section -->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:padding="16dp"-->
+<!--        android:background="@drawable/section_bg"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="ملخص المصاريف"-->
+<!--            android:textColor="@color/BOKI_TextSecondary"-->
+<!--            android:textSize="18sp"-->
+<!--            android:fontFamily="@font/cairo"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:textStyle="bold"/>-->
+
+<!--        &lt;!&ndash; This is the chart view from the MPAndroidChart library &ndash;&gt;-->
+<!--        <com.github.mikephil.charting.charts.BarChart-->
+<!--            android:id="@+id/expenses_bar_chart"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_marginTop="16dp"/>-->
+
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="16dp"
+        android:background="@drawable/section_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="وين راحت الدراهم؟"
+            android:textColor="@color/BOKI_TextSecondary"
+            android:textSize="18sp"
+            android:fontFamily="@font/cairo"
+            android:layout_gravity="end"
+            android:textStyle="bold"/>
+        <!-- RecyclerView to display the list of categories -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expenses_categories_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_expense_category" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
