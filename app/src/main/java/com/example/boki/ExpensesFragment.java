@@ -1,64 +1,121 @@
 package com.example.boki;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
+import android.content.res.ColorStateList;
+import android.os.Bundle;import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExpensesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ConcatAdapter;
+
+import com.example.boki.databinding.FragmentExpensesBinding;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ExpensesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // NOTE 1: Declare binding variable. It will be initialized in onCreateView.
+    private FragmentExpensesBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // (Optional but recommended) Your adapters for the RecyclerView solution
+//    private ExpenseCategoryAdapter expenseAdapter;
+//    private HeaderAdapter headerAdapter;
+//    private List<ExpenseCategory> expenseCategoryList = new ArrayList<>();
+
 
     public ExpensesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpensesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ExpensesFragment newInstance(String param1, String param2) {
-        ExpensesFragment fragment = new ExpensesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expenses, container, false);
+        // NOTE 2: CORRECT WAY to initialize binding in a Fragment.
+        // This inflates the layout and creates the view.
+        binding = FragmentExpensesBinding.inflate(inflater, container, false);
+        // Return the root view of the binding.
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // NOTE 3: ALL view-related logic goes here, AFTER the view has been created.
+
+        // This is the simplest solution using your old XML structure, assuming you are NOT using RecyclerView yet.
+        // If you are using the RecyclerView solution, you should put this logic inside the HeaderAdapter.
+        setupButtonClickListeners();
+
+        // --- If you are using the ConcatAdapter solution, you would call this ---
+        // setupRecyclerView();
+    }
+
+    private void setupButtonClickListeners() {
+        // Define colors correctly within a lifecycle method where context is available.
+        int selectedBgColor = ContextCompat.getColor(requireContext(), R.color.BOKI_MidPurple);
+        int unselectedBgColor = ContextCompat.getColor(requireContext(), android.R.color.transparent);
+
+        int selectedTextColor = ContextCompat.getColor(requireContext(), R.color.BOKI_MainPurple);
+        int unselectedTextColor = ContextCompat.getColor(requireContext(), R.color.BOKI_TextSecondary);
+
+        // Group buttons for easier management
+        Button monthButton = binding.monthDaysBtn;
+        Button weekButton = binding.weekDaysBtn;
+        Button dayButton = binding.daysBtn;
+
+        monthButton.setOnClickListener(v -> {
+            // Update UI for Monthly view
+            updateButtonState(monthButton, selectedBgColor, selectedTextColor, weekButton, dayButton);
+        });
+
+        weekButton.setOnClickListener(v -> {
+            // Update UI for Weekly view
+            updateButtonState(weekButton, selectedBgColor, selectedTextColor, monthButton, dayButton);
+        });
+
+        dayButton.setOnClickListener(v -> {
+            // Update UI for Daily view
+            updateButtonState(dayButton, selectedBgColor, selectedTextColor, monthButton, weekButton);
+        });
+
+        // Set an initial state, e.g., "Weekly" is selected by default
+        weekButton.performClick();
+    }
+
+    /**
+     * A helper method to manage the visual state of the cycle buttons.
+     * @param selectedButton The button that was just clicked.
+     * @param otherButton1 The first of the other two buttons.
+     * @param otherButton2 The second of the other two buttons.
+     */
+    private void updateButtonState(Button selectedButton, int selectedBgColor, int selectedTextColor, Button otherButton1, Button otherButton2) {
+        // Style for the selected button
+        selectedButton.setBackgroundTintList(ColorStateList.valueOf(selectedBgColor));
+        selectedButton.setTextColor(selectedTextColor);
+
+        // Reset styles for the other buttons
+        int unselectedBgColor = ContextCompat.getColor(requireContext(), android.R.color.transparent);
+        int unselectedTextColor = ContextCompat.getColor(requireContext(), R.color.BOKI_TextSecondary);
+
+        otherButton1.setBackgroundTintList(ColorStateList.valueOf(unselectedBgColor));
+        otherButton1.setTextColor(unselectedTextColor);
+
+        otherButton2.setBackgroundTintList(ColorStateList.valueOf(unselectedBgColor));
+        otherButton2.setTextColor(unselectedTextColor);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // NOTE 4: CRITICAL step to avoid memory leaks in Fragments.
+        binding = null;
     }
 }
