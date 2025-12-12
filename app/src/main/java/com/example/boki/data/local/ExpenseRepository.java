@@ -250,6 +250,36 @@ public class ExpenseRepository {
         
         return count;
     }
+
+    /**
+     * Get total expense amount between two dates (inclusive).
+     *
+     * @param startIso yyyy-MM-dd (inclusive)
+     * @param endIso   yyyy-MM-dd (inclusive)
+     * @return total amount (0.0 if no rows)
+     */
+    public double getTotalAmountBetween(String startIso, String endIso) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = null;
+        double total = 0.0;
+
+        String sql =
+                "SELECT COALESCE(SUM(" + ExpenseDbHelper.COLUMN_AMOUNT + "), 0) " +
+                        "FROM " + ExpenseDbHelper.TABLE_EXPENSE + " " +
+                        "WHERE " + ExpenseDbHelper.COLUMN_DATE + " >= ? " +
+                        "AND " + ExpenseDbHelper.COLUMN_DATE + " <= ?";
+
+        try {
+            cursor = db.rawQuery(sql, new String[]{ startIso, endIso });
+            if (cursor.moveToFirst()) {
+                total = cursor.getDouble(0);
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+        }
+
+        return total;
+    }
     
     /**
      * Helper method to convert Cursor to Expense object

@@ -1,4 +1,6 @@
-package com.example.boki;import android.content.Context;
+package com.example.boki;
+
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.boki.models.Expense;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -87,6 +93,34 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             categoryicon = itemView.findViewById(R.id.category_icon);
         }
 
+        // Convert DB time (HH:mm:ss) -> UI time (h:mm a)
+        private String formatTimeForUi(String dbTime) {
+            if (dbTime == null) return "";
+            try {
+                SimpleDateFormat dbFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+                SimpleDateFormat uiFormat = new SimpleDateFormat("h:mm a", Locale.US);
+                Date parsed = dbFormat.parse(dbTime);
+                return (parsed != null) ? uiFormat.format(parsed) : dbTime;
+            } catch (ParseException e) {
+                // Fallback: show raw string if parsing fails (handles old data like "7:05 PM")
+                return dbTime;
+            }
+        }
+
+        // Convert DB date (yyyy-MM-dd) -> Arabic UI date (dd MMM yyyy)
+        private String formatDateForUi(String dbDate) {
+            if (dbDate == null) return "";
+            try {
+                SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                SimpleDateFormat uiFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("ar"));
+                Date parsed = dbFormat.parse(dbDate);
+                return (parsed != null) ? uiFormat.format(parsed) : dbDate;
+            } catch (ParseException e) {
+                // Fallback for old formats like "6-12-2025"
+                return dbDate;
+            }
+        }
+
         /**
          * Note 6: This new 'bind' method takes an Expense object and sets the view's content.
          * This makes the onBindViewHolder method cleaner and organizes the code better.
@@ -94,8 +128,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         public void bind(Expense expense) {
             operationtitle.setText(expense.getTitle());
             amount.setText(String.format(Locale.getDefault(), "%.2f", expense.getAmount()));
-            date.setText(expense.getDate());
-            time.setText(expense.getTime());
+            date.setText(formatDateForUi(expense.getDate()));
+            time.setText(formatTimeForUi(expense.getTime()));
 
             // Get the context from the itemView, which is needed to access resources (colors).
             Context context = itemView.getContext();

@@ -54,6 +54,18 @@ public class OperationsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.expenses_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(expenseAdapter); // Set the adapter on the RecyclerView.
+
+        //refresh the data
+        getParentFragmentManager().setFragmentResultListener(
+                "expense_refresh",
+                getViewLifecycleOwner(),
+                (requestKey, bundle) -> {
+                    boolean added = bundle.getBoolean("expense_added", false);
+                    if (added) {
+                        loadExpenses(); // refresh list
+                    }
+                }
+        );
     }
 
     @Override
@@ -86,5 +98,10 @@ public class OperationsFragment extends Fragment {
         if (expenseRepository != null) {
             expenseRepository.close();
         }
+    }
+
+    private void loadExpenses() {
+        List<Expense> list = expenseRepository.getAllExpenses();
+        expenseAdapter.setExpenses(list);
     }
 }
