@@ -22,9 +22,19 @@ import java.util.Locale;
  */
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
 
+    public interface OnExpenseActionListener {
+        void onExpenseClick(Expense expense);
+        void onExpenseLongClick(Expense expense);
+    }
+
     // Note 1: The list is initialized here but kept private.
     // It's better to manage the data internally and provide a public method to update it.
     private List<Expense> expenses = new ArrayList<>();
+    private OnExpenseActionListener listener;
+
+    public void setOnExpenseActionListener(OnExpenseActionListener listener) {
+        this.listener = listener;
+    }
 
     // Note 2: A public constructor with no arguments is cleaner.
     // The adapter doesn't need the list or context right away.
@@ -54,6 +64,18 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         Expense currentExpense = expenses.get(position);
         // Call the 'bind' method in the ViewHolder to set the data.
         holder.bind(currentExpense);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onExpenseClick(currentExpense);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if (listener != null) {
+                listener.onExpenseLongClick(currentExpense);
+            }
+            return true;
+        });
     }
 
     @Override
