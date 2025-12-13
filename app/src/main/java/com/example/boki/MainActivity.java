@@ -95,8 +95,15 @@ public class MainActivity extends AppCompatActivity {
             // Show the dialog
             addoperations_dialog.show();
             //set the date and time to curent date and time
-            dialogBinding.datePickerBtn.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
-            dialogBinding.timePickerBtn.setText(new SimpleDateFormat("HH:mm a", Locale.getDefault()).format(new Date()));
+            //set the date and time to current date and time in ISO format
+            dialogBinding.datePickerBtn.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date()));
+
+            // Show AM/PM to user, but keep DB time in 24h with seconds for correct sorting
+            String timeUi = new SimpleDateFormat("h:mm a", Locale.US).format(new Date());
+            String timeDb = new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date());
+            dialogBinding.timePickerBtn.setText(timeUi);
+            dialogBinding.timePickerBtn.setTag(timeDb);
+
             //reset the category button to other
             MaterialButton targetButton = (MaterialButton) dialogBinding.categoryBtn;
             targetButton.setText(categoryBinding.otherBtn.getText());
@@ -153,17 +160,29 @@ public class MainActivity extends AppCompatActivity {
              //get date
              String date = dialogBinding.datePickerBtn.getText().toString();
              //get time
-             String time = dialogBinding.timePickerBtn.getText().toString();
+            // Get DB time from tag (sortable HH:mm:ss). UI text is AM/PM.
+            String time = (String) dialogBinding.timePickerBtn.getTag();
+            if (time == null || time.trim().isEmpty()) {
+                time = new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date());
+            }
 
             Expense newExpense = new Expense(name, amount,category, null, date, time);
             // Save the expense to the database
             expenseRepository.insertExpense(newExpense);
 
-            // FOT TEST PURPOSE
-            //read the data base to check if it saved or not
-            // Retrieve all expenses (sorted by date DESC, time DESC)
-//            List<Expense> allExpenses = expenseRepository.getAllExpenses();
+            // Notify all fragments that an expense was added so they can refresh UI immediately
+            Bundle result = new Bundle();
+            result.putBoolean("expense_added", true);
+            result.putString("expense_added_date", date);
+            result.putString("expense_added_time", time);
+            getSupportFragmentManager().setFragmentResult("expense_refresh", result);
 
+
+//             FOT TEST PURPOSE
+//            read the data base to check if it saved or not
+//             Retrieve all expenses (sorted by date DESC, time DESC)
+//            List<Expense> allExpenses = expenseRepository.getAllExpenses();
+//
 //            // Iterate through expenses
 //            for (Expense expense : allExpenses) {
 //                Log.d("Database", "Expense: " + expense.getTitle() + " - $" + expense.getAmount()+"category:"+ expense.getCategory()+"date:"+expense.getDate()+"Time:"+expense.getTime()) ;
@@ -326,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 2. Create the DatePickerDialog, passing the current date as the default
         DatePickerDialog openDatePickerDialog = new DatePickerDialog(MainActivity.this, R.style.DialogTheme, (view, year, month, dayOfMonth) -> {
-            dialogBinding.datePickerBtn.setText(String.format(Locale.getDefault(), "%d-%d-%d", dayOfMonth, month + 1, year));
+            dialogBinding.datePickerBtn.setText(String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, dayOfMonth));
         }, currentYear, currentMonth, currentDay); // <-- Use current date variables here
 
         openDatePickerDialog.show();
@@ -335,25 +354,57 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open TimePickerDialog
     private void openTimePickerDialog() {
-        // 1. Get a Calendar instance to retrieve the current time
+        // Use Calendar to retrieve current time
         final java.util.Calendar c = java.util.Calendar.getInstance();
-        int currentHour = c.get(java.util.Calendar.HOUR_OF_DAY); // Use HOUR_OF_DAY for 24-hour format
+        int currentHour = c.get(java.util.Calendar.HOUR_OF_DAY);
         int currentMinute = c.get(java.util.Calendar.MINUTE);
 
         // 2. Create the TimePickerDialog, passing the current time as the default
-        TimePickerDialog dialog = new TimePickerDialog(MainActivity.this, R.style.timepukerTheme, (view, hourOfDay, minute) -> {
-            // This format will correctly show AM/PM
-            dialogBinding.timePickerBtn.setText(String.format(Locale.getDefault(), "%d:%02d %s", (hourOfDay == 0 || hourOfDay == 12) ? 12 : hourOfDay % 12, minute, hourOfDay < 12 ? "AM" : "PM"));
-        }, currentHour, currentMinute, false); // <-- Use current time variables here. 'false' for 12-hour format with AM/PM selector.
+        // 12-hour picker for user convenience (AM/PM)
+        TimePickerDialog dialog = new TimePickerDialog(
+                MainActivity.this,
+                R.style.timepukerTheme,
+                (view, hourOfDay, minute) -> {
+                    // 1) DB time (24h + seconds) for correct sorting
+                    String timeDb = String.format(Locale.US, "%02d:%02d:00", hourOfDay, minute);
+
+                    // 2) UI time (AM/PM) for better UX
+                    int displayHour;
+                    if (hourOfDay == 0) {
+                        displayHour = 12;
+                    } else if (hourOfDay > 12) {
+                        displayHour = hourOfDay - 12;
+                    } else {
+                        displayHour = hourOfDay;
+                    }
+
+                    String amPm = (hourOfDay < 12) ? "AM" : "PM";
+                    String timeUi = String.format(Locale.US, "%d:%02d %s", displayHour, minute, amPm);
+
+                    // Set UI + store DB value in tag
+                    dialogBinding.timePickerBtn.setText(timeUi);
+                    dialogBinding.timePickerBtn.setTag(timeDb);
+                },
+                currentHour,
+                currentMinute,
+                false
+        );
 
         dialog.show();
+
     }
+
+
+
+
+
 
 
     //set all value in add operation dialog and close it
     private  void closeAddOperationDialog(){
         dialogBinding.operationName.setText("");
         dialogBinding.operationAmount.setText("");
+        dialogBinding.timePickerBtn.setTag(null);
         addoperations_dialog.dismiss();
 
     }
