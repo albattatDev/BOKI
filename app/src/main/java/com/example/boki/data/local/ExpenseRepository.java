@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.boki.models.Expense;
-
+import com.example.boki.models.ExpenseCategorySummary;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Repository class for managing Expense data operations.
@@ -280,6 +282,46 @@ public class ExpenseRepository {
 
         return total;
     }
+
+    /**
+         * Get total amount per category within a date range, sorted DESC by total.
+            *
+            * @param startIso yyyy-MM-dd (inclusive)
+     * @param endIso   yyyy-MM-dd (inclusive)
+     * @return list of ExpenseCategorySummary (percentage calculated later in UI)
+     */
+    public List<ExpenseCategorySummary> getCategoryTotalsBetween(String startIso, String endIso) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = null;
+
+        List<ExpenseCategorySummary> results = new ArrayList<>();
+
+        String sql =
+                "SELECT " + ExpenseDbHelper.COLUMN_CATEGORY + ", " +
+                        "SUM(" + ExpenseDbHelper.COLUMN_AMOUNT + ") AS total " +
+                        "FROM " + ExpenseDbHelper.TABLE_EXPENSE + " " +
+                        "WHERE " + ExpenseDbHelper.COLUMN_DATE + " >= ? " +
+                        "AND " + ExpenseDbHelper.COLUMN_DATE + " <= ? " +
+                        "GROUP BY " + ExpenseDbHelper.COLUMN_CATEGORY + " " +
+                        "ORDER BY total DESC";
+
+        try {
+            cursor = db.rawQuery(sql, new String[]{ startIso, endIso });
+            while (cursor.moveToNext()) {
+                String category = cursor.getString(0);
+                double total = cursor.getDouble(1);
+
+                // percentage will be calculated later once we know the grand total
+                results.add(new ExpenseCategorySummary(category, total, 0.0));
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+        }
+
+        return results;
+    }
+
+    /**
     
     /**
      * Helper method to convert Cursor to Expense object
