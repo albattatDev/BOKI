@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.text.DecimalFormat;
 import androidx.recyclerview.widget.ConcatAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.boki.databinding.FragmentExpensesBinding;
 
@@ -39,8 +40,7 @@ public class ExpensesFragment extends Fragment {
     private ExpenseRepository expenseRepository;
     private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
     private final DecimalFormat amountFormat = new DecimalFormat("0.##");
-
-
+    private ExpenseCategoryAdapter categoryAdapter;
 
     // (Optional but recommended) Your adapters for the RecyclerView solution
 //    private ExpenseCategoryAdapter expenseAdapter;
@@ -74,6 +74,7 @@ public class ExpensesFragment extends Fragment {
         // If you are using the RecyclerView solution, you should put this logic inside the HeaderAdapter.
         resetAnchorToToday();
         expenseRepository = new ExpenseRepository(requireContext());
+        setupCategoryRecycler();
         setupButtonClickListeners();
         updateRangeAndTotalUI();
 
@@ -90,11 +91,19 @@ public class ExpensesFragment extends Fragment {
                 (requestKey, result) -> refreshUiAfterExpenseChange()
         );
 
-        setupButtonClickListeners();
-        updateRangeAndTotalUI();
+    }
+
+    private void setupCategoryRecycler() {
+        if (binding == null) return;
 
         // --- If you are using the ConcatAdapter solution, you would call this ---
         // setupRecyclerView();
+        categoryAdapter = new ExpenseCategoryAdapter();
+
+        // Your XML already sets a LinearLayoutManager via app:layoutManager,
+        // but we set it explicitly to avoid any runtime surprises.
+        binding.expensesCategoriesRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.expensesCategoriesRecycler.setAdapter(categoryAdapter);
     }
 
     private void setupButtonClickListeners() {
@@ -250,14 +259,39 @@ public class ExpensesFragment extends Fragment {
         // 3) Query DB off the UI thread
         dbExecutor.execute(() -> {
             double total = 0.0;
+            List<com.example.boki.models.ExpenseCategorySummary> raw = new ArrayList<>();
             if (expenseRepository != null) {
                 total = expenseRepository.getTotalAmountBetween(startIso, endIso);
+                raw = expenseRepository.getCategoryTotalsBetween(startIso, endIso);
             }
             final double finalTotal = total;
+
+            // Build list with calculated percentages (Top-to-bottom already sorted DESC by SQL)
+            List<com.example.boki.models.ExpenseCategorySummary> withPercent = new ArrayList<>();
+            if (raw != null) {
+                for (com.example.boki.models.ExpenseCategorySummary item : raw) {
+                    double pct = 0.0;
+                    if (finalTotal > 0) {
+                        pct = (item.getTotalAmount() / finalTotal) * 100.0;
+                    }
+                    withPercent.add(new com.example.boki.models.ExpenseCategorySummary(
+                            item.getCategory(),
+                            item.getTotalAmount(),
+                            pct
+                    ));
+                }
+            }
+
+            final List<com.example.boki.models.ExpenseCategorySummary> finalList = withPercent;
+
             requireActivity().runOnUiThread(() -> {
                 if (binding != null) {
                     // رقم فقط (بدون عملة)
                     binding.amountText.setText(amountFormat.format(finalTotal));
+
+                    if (categoryAdapter != null) {
+                        categoryAdapter.submitList(finalList);
+                    }
                 }
             });
         });
@@ -388,5 +422,6 @@ public class ExpensesFragment extends Fragment {
         dbExecutor.shutdown();
         // NOTE 4: CRITICAL step to avoid memory leaks in Fragments.
         binding = null;
+        categoryAdapter = null;
     }
 }
