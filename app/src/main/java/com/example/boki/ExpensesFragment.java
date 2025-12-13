@@ -77,6 +77,22 @@ public class ExpensesFragment extends Fragment {
         setupButtonClickListeners();
         updateRangeAndTotalUI();
 
+
+        // Listen for "expense_saved" events from Add Expense screen/dialog
+        getParentFragmentManager().setFragmentResultListener(
+                "expense_refresh",
+                getViewLifecycleOwner(),
+                (requestKey, result) -> refreshUiAfterExpenseChange()
+        );
+        getParentFragmentManager().setFragmentResultListener(
+                "expense_saved",
+                getViewLifecycleOwner(),
+                (requestKey, result) -> refreshUiAfterExpenseChange()
+        );
+
+        setupButtonClickListeners();
+        updateRangeAndTotalUI();
+
         // --- If you are using the ConcatAdapter solution, you would call this ---
         // setupRecyclerView();
     }
@@ -247,6 +263,20 @@ public class ExpensesFragment extends Fragment {
         });
     }
 
+    /**
+     * Call this whenever an expense is added/edited/deleted to refresh totals (and list if you have one).
+     */
+    private void refreshUiAfterExpenseChange() {
+        // Update totals/date range
+        updateRangeAndTotalUI();
+
+        // If you have a RecyclerView/Adapter for expenses, refresh it here.
+        // Example (when you add your adapter):
+        // if (expenseAdapter != null) expenseAdapter.notifyDataSetChanged();
+        // Or re-fetch data from DB and submit to adapter.
+    }
+
+
     private DateRange getCurrentRangeDates() {
         switch (currentTimeView) {
             case DAILY: {
@@ -338,6 +368,13 @@ public class ExpensesFragment extends Fragment {
         // Example: 09 Dec 2025
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         return sdf.format(date);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Safety refresh when coming back to this tab
+        refreshUiAfterExpenseChange();
     }
 
 
